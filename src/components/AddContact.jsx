@@ -4,7 +4,8 @@ class AddContact extends React.Component {
     state = {
         mobno: "",
         email: "",
-        name: ""
+        name: "",
+        id: "",
     };
 
     add = (e) => {
@@ -15,7 +16,9 @@ class AddContact extends React.Component {
         }
 
         this.props.addContactHandler(this.state);
-        this.setState({ name: "", mobno: "", email: "" });
+        this.setState({ name: "", mobno: "", email: "", id:"" });
+
+        this.setState({ id: this.props.contacts.length++});
 
     }
     render() {

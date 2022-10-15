@@ -8,6 +8,7 @@ import Contactlist from './Contactlist';
 
 function App() {
   const LOCAL_STORAGE_KEY = "contacts";
+
   const [contacts, setContacts] = useState(
     JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) ?? []
   );
@@ -15,6 +16,8 @@ function App() {
   const addContactHandler = (contact) => {
     console.log(contact);
     setContacts([...contacts, contact]);
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contacts));
   };
 
   const removeContactHandler = (id) => {
@@ -22,6 +25,8 @@ function App() {
       return contact.id !== id;
     });
     setContacts(newContactList);
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contacts));
   };
 
   useEffect(() => {
@@ -31,7 +36,7 @@ function App() {
   return (
     <div className='ui container'>
       <Header />
-      <AddContact addContactHandler={addContactHandler} />
+      <AddContact contacts={contacts} addContactHandler={addContactHandler} />
       <h1>Contact List</h1>
       <Contactlist contacts={contacts} getContactID={removeContactHandler}
       />
